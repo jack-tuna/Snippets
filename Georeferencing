@@ -1,0 +1,27 @@
+import rasterio as rio
+
+#Accessing the metadata of an existing georeferenced image
+with rio.open('PATH') as src:
+    IMAGE_ras = src.read()
+    IMAGE_meta = src.profile
+
+#View the metadata of the image
+print(IMAGE_meta)
+
+#View the transform and crs
+IMAGE_transform = IMAGE_meta["transform"]
+IMAGE_crs = IMAGE_meta["crs"]
+
+#Viewing transform and crs
+print(IMAGE_transform)
+print(IMAGE_crs)
+
+#Ensuring the count value is 1 (1 band of pixel data) and assigning the data as float to be compatible with the new image
+IMAGE_meta['count'] = 1
+IMAGE_area_meta['dtype'] = "float64"
+
+print(IMAGE_meta)
+
+#Saving the new image with georeferenced metadata
+with rio.open('PATH', 'w', **IMAGE_meta) as dst1:
+    dst1.write(y_pred, 1)
